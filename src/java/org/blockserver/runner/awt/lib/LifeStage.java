@@ -82,7 +82,6 @@ public abstract class LifeStage extends WindowAdapter{
 
 	@Override
 	public void windowClosing(WindowEvent e){
-		System.out.println("Closing window...");
 		if(closingWindow){
 			return;
 		}

@@ -22,6 +22,7 @@ public class MainStage extends LifeStage implements ActionListener{
 	private Panel leftPanel, rightPanel, controls, inputPanel;
 	private Button startButton;
 	private JTextPane consoleOutput;
+	private JScrollPane consoleOutputScroller;
 	private TextField consoleInput;
 
 	private Server serverInstance = null;
@@ -87,11 +88,11 @@ public class MainStage extends LifeStage implements ActionListener{
 	private void setupGuiOnServerStart(){
 		startButton.setLabel("Starting...");
 		startButton.setEnabled(false);
-		rightPanel.add(new JScrollPane(consoleOutput = new JTextPane()));
+		rightPanel.add(consoleOutputScroller = new JScrollPane(consoleOutput = new JTextPane()));
 		leftPanel.add(inputPanel = new Panel(new GridLayout(2, 1)));
 		inputPanel.add(new Label("Input command:"));
 		inputPanel.add(consoleInput = new TextField());
-		console = new Console(consoleOutput, consoleInput);
+		console = new Console(consoleOutput, consoleInput, consoleOutputScroller);
 		reload();
 	}
 	private void setupGuiOnPostServerStart(){
