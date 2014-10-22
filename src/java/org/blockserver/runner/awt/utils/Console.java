@@ -6,6 +6,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +20,7 @@ import org.blockserver.ConsoleCommandSource;
 import org.blockserver.utility.ServerLogger;
 
 public class Console implements ConsoleCommandSource, ServerLogger{
-	private List<String> cmdsToDispatch;
+	private List<String> cmdsToDispatch = new ArrayList<String>();
 	private JTextPane pane;
 	private TextField cmdInput;
 	private Style time, trace, fatal, warning, error, info, debug, cmdEcho;

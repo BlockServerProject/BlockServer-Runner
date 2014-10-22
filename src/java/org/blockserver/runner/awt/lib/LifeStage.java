@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Frame;
 import java.awt.LayoutManager;
 import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public abstract class LifeStage extends WindowAdapter{
 	private String name;
@@ -11,6 +12,7 @@ public abstract class LifeStage extends WindowAdapter{
 	private LayoutManager frameLayout = null;
 	private LifeStage child = null;
 	private LifeStage parent;
+	private boolean closingWindow = false;
 	public LifeStage(String name){
 		this(name, null);
 	}
@@ -25,6 +27,7 @@ public abstract class LifeStage extends WindowAdapter{
 		frame = new Frame(name);
 		frameLayout = layout;
 		frame.setLayout(layout);
+		frame.addWindowListener(this);
 		prepareGui();
 		frame.setVisible(true);
 		frame.setExtendedState(extendState);
@@ -75,6 +78,16 @@ public abstract class LifeStage extends WindowAdapter{
 	}
 	public LayoutManager getFrameLayout(){
 		return frameLayout;
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e){
+		System.out.println("Closing window...");
+		if(closingWindow){
+			return;
+		}
+		closingWindow = true;
+		finish();
 	}
 
 	protected abstract void prepareGui();
