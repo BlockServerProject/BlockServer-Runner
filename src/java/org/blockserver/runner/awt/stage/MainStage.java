@@ -40,6 +40,14 @@ public class MainStage extends LifeStage implements ActionListener{
 		addComp(leftPanel = new Panel(new GridLayout(3, 1)));
 		leftPanel.add(controls = new Panel(new FlowLayout(FlowLayout.LEFT)));
 		controls.add(startButton = new Button("Start Server"));
+		Button editProps;
+		controls.add(editProps = new Button("Edit Server Properties"));
+		editProps.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent evt){
+				new ServerPropertiesEditStage(MainStage.this, properties);
+			}
+		});
 		startButton.addActionListener(this);
 		// TODO add edit properties button
 		addComp(rightPanel = new Panel(new GridLayout(1, 1)));

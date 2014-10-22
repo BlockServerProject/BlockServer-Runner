@@ -28,6 +28,7 @@ public abstract class LifeStage extends WindowAdapter{
 		frameLayout = layout;
 		frame.setLayout(layout);
 		frame.addWindowListener(this);
+		frame.addWindowFocusListener(this);
 		prepareGui();
 		frame.setVisible(true);
 		frame.setExtendedState(extendState);
@@ -55,6 +56,7 @@ public abstract class LifeStage extends WindowAdapter{
 		awaken();
 	}
 	public void awaken(){
+		System.out.println(getClass().getSimpleName() + " awake!");
 		if(child != null){
 			child.awaken();
 		}
@@ -87,6 +89,11 @@ public abstract class LifeStage extends WindowAdapter{
 		}
 		closingWindow = true;
 		finish();
+	}
+	@Override
+	public void windowGainedFocus(WindowEvent e){
+		System.out.println(getClass().getSimpleName() + " gained focus!");
+		awaken();
 	}
 
 	protected abstract void prepareGui();
