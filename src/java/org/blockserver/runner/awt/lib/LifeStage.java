@@ -11,7 +11,7 @@ public abstract class LifeStage extends WindowAdapter{
 	private Frame frame = null;
 	private LayoutManager frameLayout = null;
 	private LifeStage child = null;
-	private LifeStage parent;
+	protected LifeStage parent;
 	private boolean closingWindow = false;
 	public LifeStage(String name){
 		this(name, null);
@@ -56,7 +56,6 @@ public abstract class LifeStage extends WindowAdapter{
 		awaken();
 	}
 	public void awaken(){
-		System.out.println(getClass().getSimpleName() + " awake!");
 		if(child != null){
 			child.awaken();
 		}
@@ -92,13 +91,13 @@ public abstract class LifeStage extends WindowAdapter{
 	}
 	@Override
 	public void windowGainedFocus(WindowEvent e){
-		System.out.println(getClass().getSimpleName() + " gained focus!");
 		awaken();
 	}
 
 	protected abstract void prepareGui();
 	protected void onClose(){}
 	protected void onPostClose(){}
+	public void onResult(int resultCode, Object result){}
 	protected void reload(){
 		frame.validate();
 	}
