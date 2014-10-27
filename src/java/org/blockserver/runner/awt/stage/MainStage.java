@@ -20,7 +20,7 @@ import org.blockserver.runner.awt.utils.ServerProperties;
 public class MainStage extends LifeStage implements ActionListener{
 	public final static int SERVER_STOPPED = 0, SERVER_RUNNING = 1, SERVER_STOPPING = 2;
 	private Panel leftPanel, rightPanel, controls, inputPanel;
-	private Button startButton;
+	private Button startStopButton;
 	private JTextPane consoleOutput;
 	private JScrollPane consoleOutputScroller;
 	private TextField consoleInput;
@@ -39,7 +39,7 @@ public class MainStage extends LifeStage implements ActionListener{
 	protected void prepareGui(){
 		addComp(leftPanel = new Panel(new GridLayout(3, 1)));
 		leftPanel.add(controls = new Panel(new FlowLayout(FlowLayout.LEFT)));
-		controls.add(startButton = new Button("Start Server"));
+		controls.add(startStopButton = new Button("Start Server"));
 		Button editProps;
 		controls.add(editProps = new Button("Edit Server Properties"));
 		editProps.addActionListener(new ActionListener(){
@@ -48,7 +48,7 @@ public class MainStage extends LifeStage implements ActionListener{
 				new ServerPropertiesEditStage(MainStage.this, properties);
 			}
 		});
-		startButton.addActionListener(this);
+		startStopButton.addActionListener(this);
 		// TODO add edit properties button
 		addComp(rightPanel = new Panel(new GridLayout(1, 1)));
 		reload();
@@ -71,8 +71,8 @@ public class MainStage extends LifeStage implements ActionListener{
 				state = SERVER_RUNNING;
 				break;
 			case SERVER_RUNNING:
-				startButton.setLabel("Stopping...");
-				startButton.setEnabled(false);
+				startStopButton.setLabel("Stopping...");
+				startStopButton.setEnabled(false);
 				state = SERVER_STOPPING;
 				reload();
 				new Thread(new Runnable(){
@@ -86,32 +86,33 @@ public class MainStage extends LifeStage implements ActionListener{
 						}
 					}
 				}).start();
-				startButton.setLabel("Start");
-				startButton.setEnabled(true);
+				startStopButton.setLabel("Start");
+				startStopButton.setEnabled(true);
 				reload();
 				// TODO clear & reset GUI
 				break;
 		}
 	}
 	private void setupGuiOnServerStart(){
-		startButton.setLabel("Starting...");
-		startButton.setEnabled(false);
+		startStopButton.setLabel("Starting...");
+		startStopButton.setEnabled(false);
 		rightPanel.add(consoleOutputScroller = new JScrollPane(consoleOutput = new JTextPane()));
 		leftPanel.add(inputPanel = new Panel(new GridLayout(2, 1)));
 		inputPanel.add(new Label("Input command:"));
 		inputPanel.add(consoleInput = new TextField());
+		consoleInput.setEnabled(true);
 		console = new Console(consoleOutput, consoleInput, consoleOutputScroller);
 		reload();
 	}
 	private void setupGuiOnPostServerStart(){
-		startButton.setLabel("Stop");
-		startButton.setEnabled(true);
+		startStopButton.setLabel("Stop");
+		startStopButton.setEnabled(true);
 		reload();
 	}
 	public void onServerStopped(){
 		state = SERVER_STOPPED;
-		startButton.setLabel("Start");
-		startButton.setEnabled(true);
+		startStopButton.setLabel("Start");
+		startStopButton.setEnabled(true);
 		serverInstance = null;
 		reload();
 	}

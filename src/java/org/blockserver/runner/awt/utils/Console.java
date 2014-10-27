@@ -31,6 +31,7 @@ public class Console implements ConsoleCommandSource, ServerLogger{
 	public Console(JTextPane pane, TextField cmdInput, JScrollPane scroller){
 		this.pane = pane;
 		this.cmdInput = cmdInput;
+		cmdInput.setEnabled(true);
 		this.scroll = scroller;
 		time = pane.addStyle("time", null);
 		StyleConstants.setForeground(time, Color.BLUE);
@@ -90,9 +91,11 @@ public class Console implements ConsoleCommandSource, ServerLogger{
 	public void submitText(){
 		String text = cmdInput.getText();
 		cmdInput.setText("");
-		cmdsToDispatch.add(text);
+		synchronized(cmdsToDispatch){
+			cmdsToDispatch.add(text);
+		}
 	}
-	protected void log(String message, Style style){
+	protected synchronized void log(String message, Style style){
 		String timeStr = (new SimpleDateFormat("[HH:mm:ss] ")).format(new Date());
 		try{
 			pane.getDocument().insertString(pane.getDocument().getLength(), timeStr, time);
@@ -162,6 +165,12 @@ public class Console implements ConsoleCommandSource, ServerLogger{
 		}
 	}
 	public void onCommand(String cmd) throws ConcurrentModificationException{
-		cmdsToDispatch.add(cmd);
+		synchronized(cmdsToDispatch){
+			cmdsToDispatch.add(cmd);
+		}
+	}
+	@Override
+	public void close(){
+		cmdInput.setEnabled(false);
 	}
 }

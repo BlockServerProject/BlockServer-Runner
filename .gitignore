@@ -1,4 +1,6 @@
 bin
+logs
+data
 *.class
 
 .mtj.tmp
