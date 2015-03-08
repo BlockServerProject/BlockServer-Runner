@@ -33,8 +33,13 @@ public class MainWindow extends Frame{
 		add(leftPanel = new Panel());
 		startStopButton = new Button("Start Server");
 		startStopButton.addActionListener((ActionEvent e) -> {
-			startStopButton.setEnabled(false);
-			startServer();
+			if(server == null){
+				startStopButton.setEnabled(false);
+				startServer();
+				startStopButton.setLabel("Starting...");
+			}else{
+				startStopButton.setEnabled(false);
+			}
 		});
 		leftPanel.add(startStopButton);
 		add(rightPanel = new Panel());
@@ -43,11 +48,19 @@ public class MainWindow extends Frame{
 		toFront();
 		validate();
 	}
+	public boolean isServerRunning(){
+		return server != null;
+	}
 	private void startServer(){
 		server = new ServerBuilder()
 				// configure
 				.build();
 		// server.setAPI(...);
+		server.addShutdownFunction(this::onServerStop);
 		server.start();
+	}
+	private void onServerStop(){
+		startStopButton.setEnabled(true);
+		startStopButton.setLabel("Start");
 	}
 }
