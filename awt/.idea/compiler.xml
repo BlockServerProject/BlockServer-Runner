@@ -23,11 +23,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="BlockServer-Runner" />
+        <module name="BlockServer-Runner-AWT" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="BlockServer-Runner" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BlockServer-Runner.iml" filepath="$PROJECT_DIR$/BlockServer-Runner.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BlockServer-Runner-AWT.iml" filepath="$PROJECT_DIR$/BlockServer-Runner-AWT.iml" />
     </modules>
   </component>
 </project>

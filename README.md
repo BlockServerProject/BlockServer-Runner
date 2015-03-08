@@ -1,4 +1,4 @@
 BlockServer-Runner
 ==================
 
-A Java AWT-based UI for running BlockServer
+A Java Graphical User Interface for running BlockServer
